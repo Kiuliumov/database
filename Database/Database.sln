@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36804.6 d17.14
@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database.Core", "Database.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database.Parser", "Database.Parser\Database.Parser.csproj", "{4F7A123A-BCB0-419A-9727-636D0E858810}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database.Storage", "Database.Storage\Database.Storage\Database.Storage.csproj", "{AF095EB1-F5AE-42D8-B15F-C3B79EFDF766}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database.Storage", "Database.Storage\Database.Storage.csproj", "{AF095EB1-F5AE-42D8-B15F-C3B79EFDF766}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database.Indexing", "Database.Indexing\Database.Indexing.csproj", "{CCC9857D-4B8B-45D3-ACDA-28A36361A55C}"
 EndProject
