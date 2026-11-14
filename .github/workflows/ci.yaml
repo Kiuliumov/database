@@ -1,0 +1,30 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  code-quality:
+    name: Build and Format Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore Database/Database.sln
+
+      - name: Build solution
+        run: dotnet build Database/Database.sln --configuration Release --no-restore
+
+      - name: Check code formatting
+        run: dotnet format Database/Database.sln --verify-no-changes --no-restore
