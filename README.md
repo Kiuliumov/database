@@ -1,4 +1,4 @@
-# TU Database
+# Database
 
 A simple database management system implemented in C# as a course project for **Synthesis and Analysis of Algorithms** at the **Technical University of Sofia**.
 
