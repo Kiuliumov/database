@@ -8,7 +8,9 @@ public class Tokenizer
     {
         ArgumentNullException.ThrowIfNull(sql);
 
-        var tokens = new List<Token>();
+        // Each character can produce at most one token, plus the end marker.
+        var tokens = new Token[sql.Length + 1];
+        int count = 0;
         int position = 0;
 
         while (position < sql.Length)
@@ -71,12 +73,32 @@ public class Tokenizer
             }
 
             // Keep the original text and starting position.
-            tokens.Add(new Token(type, sql[start..position], start));
+            tokens[count++] = new Token(type, Extract(sql, start, position), start);
         }
 
         // Mark the end so the parser knows there are no more tokens.
-        tokens.Add(new Token(TokenType.EndOfInput, "", position));
-        return tokens.ToArray();
+        tokens[count++] = new Token(TokenType.EndOfInput, "", position);
+        return CopyTokens(tokens, count);
+    }
+
+    // Copy only the populated part of the token buffer.
+    private static Token[] CopyTokens(Token[] tokens, int count)
+    {
+        var result = new Token[count];
+        for (int i = 0; i < count; i++)
+            result[i] = tokens[i];
+
+        return result;
+    }
+
+    // Copy token text without built-in string processing methods.
+    private static string Extract(string input, int start, int end)
+    {
+        var characters = new char[end - start];
+        for (int i = start; i < end; i++)
+            characters[i - start] = input[i];
+
+        return new string(characters);
     }
 
     // Return the position immediately after the closing quote.
@@ -161,10 +183,7 @@ public class Tokenizer
     private static bool IsLetter(char c)
     {
         return (c >= 'a' && c <= 'z') ||
-               (c >= 'A' && c <= 'Z') ||
-               (c >= 'А' && c <= 'Я') ||
-               (c >= 'а' && c <= 'я') ||
-               c == 'Ё' || c == 'ё';
+               (c >= 'A' && c <= 'Z');
     }
 
     private static bool IsDigit(char c)
