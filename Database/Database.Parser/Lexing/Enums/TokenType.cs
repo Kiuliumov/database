@@ -1,4 +1,5 @@
-﻿namespace Database.Parser.Lexing.Enums;
+namespace Database.Parser.Lexing.Enums;
+
 public enum TokenType
 {
     Identifier,
