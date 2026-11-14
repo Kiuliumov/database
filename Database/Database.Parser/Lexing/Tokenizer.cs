@@ -160,7 +160,7 @@ public class Tokenizer
 
     private static bool IsOperatorStart(char c)
     {
-        return c is '=' or '<' or '>' or '!';
+        return c is '=' or '<' or '>' or '!' or '-' or '*';
     }
 
     private static bool IsTwoCharacterOperator(char first, char second)
