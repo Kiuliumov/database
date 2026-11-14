@@ -27,7 +27,6 @@ public class Tokenizer
             int start = position;
             TokenType type;
 
-            // Read a name, allowing digits after the first character.
             if (IsIdentifierStart(current))
             {
                 type = TokenType.Identifier;
@@ -38,7 +37,6 @@ public class Tokenizer
                 while (position < sql.Length &&
                        IsIdentifierPart(sql[position]));
             }
-            // Read a whole number.
             else if (IsDigit(current))
             {
                 type = TokenType.Number;
@@ -48,19 +46,16 @@ public class Tokenizer
                 }
                 while (position < sql.Length && IsDigit(sql[position]));
             }
-            // Read a quoted string, including its surrounding quotes.
             else if (IsQuote(current))
             {
                 type = TokenType.StringLiteral;
                 position = ReadStringEnd(sql, start);
             }
-            // Read a single punctuation symbol.
             else if (IsSymbol(current))
             {
                 type = TokenType.Symbol;
                 position++;
             }
-            // Read a one- or two-character comparison operator.
             else if (IsOperatorStart(current))
             {
                 type = TokenType.Operator;
@@ -72,16 +67,13 @@ public class Tokenizer
                 throw new FormatException($"Unexpected character '{current}' at position {position}.");
             }
 
-            // Keep the original text and starting position.
             tokens[count++] = new Token(type, Extract(sql, start, position), start);
         }
 
-        // Mark the end so the parser knows there are no more tokens.
         tokens[count++] = new Token(TokenType.EndOfInput, "", position);
         return CopyTokens(tokens, count);
     }
 
-    // Copy only the populated part of the token buffer.
     private static Token[] CopyTokens(Token[] tokens, int count)
     {
         var result = new Token[count];
@@ -91,7 +83,6 @@ public class Tokenizer
         return result;
     }
 
-    // Copy token text without built-in string processing methods.
     private static string Extract(string input, int start, int end)
     {
         var characters = new char[end - start];
@@ -101,7 +92,6 @@ public class Tokenizer
         return new string(characters);
     }
 
-    // Return the position immediately after the closing quote.
     private static int ReadStringEnd(string sql, int start)
     {
         char quote = sql[start];
