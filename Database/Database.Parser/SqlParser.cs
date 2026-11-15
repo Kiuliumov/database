@@ -384,11 +384,17 @@ public class SqlParser
     private string ReadComparisonOperator()
     {
         Token token = Expect(TokenType.Operator);
+        string op = token.Value;
 
-        if (token.Value == "-" || token.Value == "*")
+        if (op != "=" && op != "!=" &&
+            op != "<>" && op != "<" &&
+            op != ">" && op != "<=" &&
+            op != ">=")
+        {
             throw Error("Invalid comparison operator");
+        }
 
-        return token.Value;
+        return op;
     }
 
     private Token Current => _tokens[_position];
