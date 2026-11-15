@@ -10,16 +10,16 @@ public class DeleteCommand : ISqlCommand
     public SqlCommandType CommandType => SqlCommandType.Delete;
 
     public string TableName { get; }
-    public int? RowNumber { get; }
+    public int[]? RowNumbers { get; }
     public IExpression? Where { get; }
 
     public DeleteCommand(
         string tableName,
-        int? rowNumber = null,
+        int[]? rowNumbers = null,
         IExpression? where = null)
     {
         TableName = tableName;
-        RowNumber = rowNumber;
+        RowNumbers = rowNumbers;
         Where = where;
     }
 }

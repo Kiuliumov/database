@@ -151,13 +151,13 @@ public class SqlParser
     {
         ExpectKeyword("ROW");
 
-        int rowNumber = ReadInteger();
+        int[] rowNumbers = ReadRowNumbers();
 
         ExpectKeyword("FROM");
 
         string tableName = ReadIdentifier();
 
-        return new GetRowCommand(tableName, rowNumber);
+        return new GetRowCommand(tableName, rowNumbers);
     }
 
     private ISqlCommand ParseDelete()
@@ -168,9 +168,9 @@ public class SqlParser
 
         if (MatchKeyword("ROW"))
         {
-            int rowNumber = ReadInteger();
+            int[] rowNumbers = ReadRowNumbers();
 
-            return new DeleteCommand(tableName, rowNumber: rowNumber);
+            return new DeleteCommand(tableName, rowNumbers: rowNumbers);
         }
 
         if (MatchKeyword("WHERE"))
@@ -340,6 +340,20 @@ public class SqlParser
             return "-" + token.Value;
 
         return token.Value;
+    }
+
+    private int[] ReadRowNumbers()
+    {
+        var rowNumbers = new int[_tokens.Length];
+        int count = 0;
+
+        do
+        {
+            rowNumbers[count++] = ReadInteger();
+        }
+        while (MatchSymbol(","));
+
+        return Copy(rowNumbers, count);
     }
 
     private int ReadInteger()

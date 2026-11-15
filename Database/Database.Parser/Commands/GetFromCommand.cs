@@ -8,11 +8,11 @@ public class GetRowCommand : ISqlCommand
     public SqlCommandType CommandType => SqlCommandType.GetRow;
 
     public string TableName { get; }
-    public int RowNumber { get; }
+    public int[] RowNumbers { get; }
 
-    public GetRowCommand(string tableName, int rowNumber)
+    public GetRowCommand(string tableName, int[] rowNumbers)
     {
         TableName = tableName;
-        RowNumber = rowNumber;
+        RowNumbers = rowNumbers;
     }
 }
