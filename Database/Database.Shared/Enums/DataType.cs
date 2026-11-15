@@ -1,5 +1,4 @@
-﻿
-namespace Database.Shared.Enums;
+﻿namespace Database.Shared.Enums;
 
 public enum DataType
 {

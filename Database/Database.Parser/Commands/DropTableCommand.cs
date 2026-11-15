@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Database.Parser.Commands.Enums;
+using Database.Parser.Commands.Interfaces;
 
-namespace Database.Parser.Commands
+namespace Database.Parser.Commands;
+
+public class DropTableCommand : ISqlCommand
 {
-    internal class DropTableCommand
+    public SqlCommandType CommandType => SqlCommandType.DropTable;
+
+    public string TableName { get; }
+
+    public DropTableCommand(string tableName)
     {
+        TableName = tableName;
     }
 }
