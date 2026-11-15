@@ -1,20 +1,44 @@
-﻿using Database.Parser.Lexing;
+using Database.Parser;
+using Database.Parser.Commands;
+using Database.Parser.Commands.Interfaces;
 
-class Program
+var parser = new SqlParser();
+
+while (true)
 {
-    static void Main(string[] args)
-    {
-        Tokenizer tokenizer = new Tokenizer();
+    Console.Write("Database> ");
 
-        Token[] tokens = tokenizer.Tokenize(
-            "INSERT INTO Students(Id, Name) VALUES (1, 'Иван')"
+    string? sql = Console.ReadLine();
+
+    if (sql == null || sql == "exit")
+        break;
+
+    try
+    {
+        ISqlCommand command = parser.Parse(sql);
+
+        Console.WriteLine(
+            $"Parsed: {command.CommandType}"
         );
 
-        foreach (Token token in tokens)
+        if (command is CreateTableCommand create)
         {
             Console.WriteLine(
-                $"{token.Type}: {token.Value}"
+                $"Table: {create.TableName}"
             );
+
+            foreach (var column in create.Columns)
+            {
+                Console.WriteLine(
+                    $"  {column.Name}: {column.Type}"
+                );
+            }
         }
+    }
+    catch (FormatException ex)
+    {
+        Console.WriteLine(
+            $"SQL Error: {ex.Message}"
+        );
     }
 }
