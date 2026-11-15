@@ -1,5 +1,4 @@
-﻿
-using Database.Shared.Enums;
+﻿using Database.Shared.Enums;
 
 namespace Database.Shared.Models;
 
