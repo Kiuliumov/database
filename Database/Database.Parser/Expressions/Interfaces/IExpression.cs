@@ -1,5 +1,3 @@
 namespace Database.Parser.Expressions.Interfaces;
 
-public interface IExpression
-{
-}
+public interface IExpression { }
