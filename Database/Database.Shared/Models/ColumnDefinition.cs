@@ -4,6 +4,9 @@ namespace Database.Shared.Models;
 
 public class ColumnDefinition
 {
+    private const int MIN_STRING_LENGTH = 3;
+    private const int MAX_STRING_LENGTH = 255;
+
     public string Name { get; }
     public DataType Type { get; }
     public string? DefaultValue { get; }
@@ -20,12 +23,12 @@ public class ColumnDefinition
                 "MaxLength can only be set for string data types.");
 
         if (maxLength.HasValue &&
-            (maxLength.Value < 3 || maxLength.Value > 255))
+            (maxLength.Value < MIN_STRING_LENGTH || maxLength.Value > MAX_STRING_LENGTH))
             throw new ArgumentException(
                 "MaxLength must be between 3 and 255.");
 
         if (type == DataType.String && !maxLength.HasValue)
-            maxLength = 255; // Default max length for strings if not specified
+            maxLength = MAX_STRING_LENGTH; // Default max length for strings if not specified
 
         Name = name;
         Type = type;
