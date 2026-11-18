@@ -1,4 +1,5 @@
 using Database.Parser.Lexing.Enums;
+using Database.Parser.Utilities;
 
 namespace Database.Parser.Lexing;
 
@@ -18,7 +19,7 @@ public class Tokenizer
             char current = sql[position];
 
             // Skip whitespace between tokens.
-            if (IsWhitespace(current))
+            if (CharUtils.IsWhitespace(current))
             {
                 position++;
                 continue;
@@ -27,7 +28,7 @@ public class Tokenizer
             int start = position;
             TokenType type;
 
-            if (IsIdentifierStart(current))
+            if (CharUtils.IsIdentifierStart(current))
             {
                 type = TokenType.Identifier;
                 do
@@ -35,28 +36,28 @@ public class Tokenizer
                     position++;
                 }
                 while (position < sql.Length &&
-                       IsIdentifierPart(sql[position]));
+                       CharUtils.IsIdentifierPart(sql[position]));
             }
-            else if (IsDigit(current))
+            else if (CharUtils.IsDigit(current))
             {
                 type = TokenType.Number;
                 do
                 {
                     position++;
                 }
-                while (position < sql.Length && IsDigit(sql[position]));
+                while (position < sql.Length && CharUtils.IsDigit(sql[position]));
             }
-            else if (IsQuote(current))
+            else if (CharUtils.IsQuote(current))
             {
                 type = TokenType.StringLiteral;
                 position = ReadStringEnd(sql, start);
             }
-            else if (IsSymbol(current))
+            else if (CharUtils.IsSymbol(current))
             {
                 type = TokenType.Symbol;
                 position++;
             }
-            else if (IsOperatorStart(current))
+            else if (CharUtils.IsOperatorStart(current))
             {
                 type = TokenType.Operator;
                 position = ReadOperatorEnd(sql, start);
@@ -122,7 +123,7 @@ public class Tokenizer
     {
         int next = start + 1;
 
-        if (next < sql.Length && IsTwoCharacterOperator(sql[start], sql[next]))
+        if (next < sql.Length && CharUtils.IsTwoCharacterOperator(sql[start], sql[next]))
             return next + 1;
 
         // An exclamation mark is only valid as part of !=.
@@ -132,52 +133,4 @@ public class Tokenizer
         return next;
     }
 
-    // Character rules for the supported SQL tokens.
-    private static bool IsWhitespace(char c)
-    {
-        return c is ' ' or '\t' or '\n' or '\r';
-    }
-
-    private static bool IsIdentifierStart(char c)
-    {
-        return IsLetter(c) || c == '_';
-    }
-
-    private static bool IsIdentifierPart(char c)
-    {
-        return IsIdentifierStart(c) || IsDigit(c);
-    }
-
-    private static bool IsQuote(char c)
-    {
-        return c is '\'' or '"';
-    }
-
-    private static bool IsSymbol(char c)
-    {
-        return c is '(' or ')' or ',' or ':' or ';';
-    }
-
-    private static bool IsOperatorStart(char c)
-    {
-        return c is '=' or '<' or '>' or '!' or '-' or '*';
-    }
-
-    private static bool IsTwoCharacterOperator(char first, char second)
-    {
-        return (first == '<' && (second == '=' || second == '>')) ||
-               (first == '>' && second == '=') ||
-               (first == '!' && second == '=');
-    }
-
-    private static bool IsLetter(char c)
-    {
-        return (c >= 'a' && c <= 'z') ||
-               (c >= 'A' && c <= 'Z');
-    }
-
-    private static bool IsDigit(char c)
-    {
-        return c >= '0' && c <= '9';
-    }
 }
