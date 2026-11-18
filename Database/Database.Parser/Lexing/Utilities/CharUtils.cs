@@ -24,7 +24,7 @@ internal static class CharUtils
         (first == '<' && second is '=' or '>') ||
         (first == '>' && second == '=') ||
         (first == '!' && second == '=');
-    
+
     internal static bool IsLetter(char c) =>
         c is >= 'a' and <= 'z' or >= 'A' and <= 'Z';
 

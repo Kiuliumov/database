@@ -1,4 +1,5 @@
 ﻿namespace Database.Parser.Commands.Enums;
+
 public enum SqlCommandType
 {
     CreateTable,
