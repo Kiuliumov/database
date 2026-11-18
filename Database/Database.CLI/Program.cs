@@ -29,9 +29,24 @@ while (true)
 
             foreach (var column in create.Columns)
             {
-                Console.WriteLine(
-                    $"  {column.Name}: {column.Type}"
-                );
+                if (column.MaxLength.HasValue)
+                {
+                    Console.WriteLine(
+                        $"  {column.Name}: {column.Type} (MaxLength: {column.MaxLength})"
+                    );
+                }
+                else
+                {
+                    Console.WriteLine(
+                        $"  {column.Name}: {column.Type}"
+                    );
+                }
+                if (column.DefaultValue != null)
+                {
+                    Console.WriteLine(
+                        $"    Default: {column.DefaultValue}"
+                    );
+                }
             }
         }
     }

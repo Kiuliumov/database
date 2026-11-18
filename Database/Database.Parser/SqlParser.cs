@@ -93,13 +93,21 @@ public class SqlParser
     {
         string name = ReadIdentifier();
         ExpectSymbol(":");
+
         DataType type = ReadDataType();
+        int? maxLength = null;
         string? defaultValue = null;
+
+        if (type == DataType.String && MatchSymbol("("))
+        {
+            maxLength = ReadInteger();
+            ExpectSymbol(")");
+        }
 
         if (MatchKeyword("DEFAULT"))
             defaultValue = ReadValue();
 
-        return new ColumnDefinition(name, type, defaultValue);
+        return new ColumnDefinition(name, type, defaultValue, maxLength);
     }
 
     private ISqlCommand ParseCreateIndex()
