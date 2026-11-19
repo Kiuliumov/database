@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Database.Indexing\Database.Indexing.csproj" />
     <ProjectReference Include="..\Database.Parser\Database.Parser.csproj" />
     <ProjectReference Include="..\Database.Shared\Database.Shared.csproj" />
     <ProjectReference Include="..\Database.Storage\Database.Storage.csproj" />
