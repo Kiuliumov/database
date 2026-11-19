@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database.Parser", "Database
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database.Storage", "Database.Storage\Database.Storage.csproj", "{AF095EB1-F5AE-42D8-B15F-C3B79EFDF766}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database.Indexing", "Database.Indexing\Database.Indexing.csproj", "{CCC9857D-4B8B-45D3-ACDA-28A36361A55C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database.Shared", "Database.Shared\Database.Shared.csproj", "{3A4F7A18-D7C7-4B51-8B2D-3CD216773DBB}"
 EndProject
 Global
